@@ -1,0 +1,77 @@
+{
+  "name": "barrowlands",
+  "version": "1.0.0",
+  "description": "Create random maps in 3D with A-Frame with copperknob music",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "install-app-deps",
+    "test": "test",
+    "dev": "http-server --cors -S -C cert.pem",
+    "start": "electron ./main.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "barrowlands",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "squirrel",
+      "icon": "build/icon.ico"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drnoir/barrowlands.git"
+  },
+  "keywords": [
+    "open",
+    "source",
+    "metaverse",
+    "VR",
+    "AR",
+    "game",
+    "engine",
+    "GNU",
+    "interactive"
+  ],
+  "author": "Chris Godber <chrispgodber@gmail.com> (http://www.chrisgodber.co.uk/)",
+  "license": "All Rights Reserved",
+  "bugs": {
+    "url": "https://github.com/drnoir/barrowlands/issues"
+  },
+  "homepage": "https://github.com/drnoir/barrowlands#readme",
+  "devDependencies": {
+    "electron": "^25.0.0",
+    "electron-builder": "^24.6.3",
+    "http-server": "^14.1.1",
+    "make-dir-webpack-plugin": "^0.1.0"
+  },
+  "dependencies": {
+    "ammo.js": "github:mozillareality/ammo.js#hubs/master",
+    "budo": "^11.8.4",
+    "concurrently": "^8.0.1",
+    "electron-builder-squirrel-windows": "^24.7.0",
+    "scssify": "^4.0.0",
+    "stringify": "^5.2.0",
+    "tone": "^14.7.77"
+  }
+}
