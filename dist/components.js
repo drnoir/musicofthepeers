@@ -55,14 +55,14 @@ AFRAME.registerComponent('playercam', {
 });
 
 
-// NPC AI - Pathing and behaviours DWARF
-AFRAME.registerComponent('dwarf', {
+// NPC AI - Pathing and behaviours boombox
+AFRAME.registerComponent('boombox', {
     multiple: true,
     init: function () {
         const el = this.el;
         // on gaze cursor interaction
         el.addEventListener('click', function (evt) {
-            // PLAY SOUND OF DWARF
+            // PLAY SOUND OF boom box
                 const torch = document.querySelector('#torch')
                 torch.emit(`animation`, null, false);
                 setTimeout(torch.emit(`animation__2`, null, false), 2000);

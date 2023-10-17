@@ -3,7 +3,7 @@ import { generateRandomAmbientPiece, startRandomMusic, stopRandomMusic } from ".
 
 // ---------Reassignable global game stare vars-----
 // dwarves
-let dwarf1; let dwarf2; let dwarf3; let dwarf4; let dwarf5;
+let boom1; let boom2; let boom3; let boom4; let boom5;
 // STORE TEXTURE INFO
 let wallTexture = '0'; let floorTexture = 'floor';
 // scene Globals / shit 
@@ -45,12 +45,11 @@ function randomArrIndexWater() {
 
 // gen 5 random dwarves indexed
 function randomArrIndexDwarves() {
-    dwarf1 = getRandomNumber(0, mapSize);
-    dwarf2 = getRandomNumber(5, mapSize);
-    dwarf3 = getRandomNumber(10, mapSize);
-    dwarf4 = getRandomNumber(15, mapSize);
-    dwarf5 = getRandomNumber(20, mapSize);
-    console.log(dwarf1, dwarf2, dwarf3, dwarf4, dwarf5)
+    boom1 = getRandomNumber(0, mapSize);
+    boom2 = getRandomNumber(5, mapSize);
+    boom3 = getRandomNumber(10, mapSize);
+    boom4 = getRandomNumber(15, mapSize);
+    boom5 = getRandomNumber(20, mapSize);
 }
 
 // genreated randomExit
@@ -66,7 +65,7 @@ function generateRandomArray() {
         if (i >= waterIndexStr && i <= waterIndexEnd) {
             mapSource.push(paintWater());
         }
-        else if (i === dwarf1 || i === dwarf2 || i === dwarf3 || i === dwarf4 || i === dwarf5) {
+        else if (i ===  boom1 || i ===  boom2 || i ===  boom3 || i ===  boom4 || i ===  boom5) {
             mapSource.push(9);
             console.log('dwarf added at' + i)
         }
@@ -103,15 +102,15 @@ function downloadJSONonClick() {
 
 // CHARECETERS AND ENEMIES =--<
 //Add chareceter to scene function 
-function addDwarf() {
+function addBoom() {
     // let randomRotNum = getRandomNumber1();
-    let dwarf = document.createElement('a-box');
-    dwarf.setAttribute('id', 'dwarf');
-    dwarf.setAttribute('name', 'CopperDwarf');
-    dwarf.setAttribute('scale', '1 0.8 0.8');
-    dwarf.setAttribute('dwarf', '');
-    dwarf.setAttribute('material', 'src:#' + 'boombox');
-    return dwarf;
+    let boomBox = document.createElement('a-box');
+    boomBox.setAttribute('id', ' boom');
+    boomBox.setAttribute('name', ' boombox');
+    boomBox.setAttribute('scale', '1 0.8 0.8');
+    boomBox.setAttribute('boombox', '');
+    boomBox.setAttribute('material', 'src:#' + 'boombox');
+    return boomBox;
 }
 
 // LEVEL LOADING 
@@ -194,7 +193,8 @@ function createRooms() {
     // console.log(mapData);
     let exitTexture = 'exit'; let waterTexture = 'water';
     // genearte random Textures for mapping arr creation loop
-    wallTexture = genRandomTexure(); floorTexture = genRandomFloorTexture();
+    // wallTexture = genRandomTexure(); 
+    floorTexture = genRandomFloorTexture();
     const WALL_SIZE = 1; const WALL_HEIGHT = 2.25; const WATER_HEIGHT = 3.5;
     let el = document.getElementById('room');
     if (el === null) {
@@ -212,8 +212,8 @@ function createRooms() {
             const floorPos = `${((x - (mapSource.width / 2)) * WALL_SIZE)} 0 ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
             const position = `${((x - (mapSource.width / 2)) * WALL_SIZE)} 0 ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
             if (mapData[i] === 9) {
-                let newDwarf = addDwarf();
-                newDwarf.setAttribute('position', {x: position.x, y: 0.1, z: position.z});
+                let newBoom = addBoom();
+                newBoom.setAttribute('position', {x: position.x, y: 0.1, z: position.z});
                 const floor = document.createElement('a-box');
                 floor.setAttribute('height', WALL_HEIGHT / 20);
                 floor.setAttribute('width', WALL_SIZE);
@@ -222,7 +222,7 @@ function createRooms() {
                 floor.setAttribute('position', floorPos);
                 floor.setAttribute('material', 'src:#' + 'floor');
                 el.appendChild(floor);
-                floor.appendChild(newDwarf);
+                floor.appendChild(newBoom);
             }
             // floor
             if (mapData[i] === 0) {
@@ -243,6 +243,7 @@ function createRooms() {
             }
             // full height wall
             if (mapData[i] === 1) {
+                wallTexture = genRandomTexure(); 
                 wall = document.createElement('a-box');
                 wall.setAttribute('width', WALL_SIZE);
 
