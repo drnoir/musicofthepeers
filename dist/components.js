@@ -5,7 +5,7 @@
 // ENGINE CORE IMPORTS
 import {getRandomNumber,  loadNewLevel} from "./labgen.js";
 import {updateScore} from "./scoring.js";
-import { invokeTone, stopRandomMusic, startRandomMusic } from "./genMusic.js";
+import { invokeTone, stopRandomMusic, startRandomMusic, startRandomMusic2 } from "./genMusic.js";
 // for step checking
 let firstStep = true;
 // score updating
@@ -68,7 +68,7 @@ AFRAME.registerComponent('boombox', {
                 setTimeout(torch.emit(`animation__2`, null, false), 2000);
             
             stopRandomMusic();
-            startRandomMusic();
+            Math.random() < 0.5 ? startRandomMusic() : startRandomMusic2();
         });
     },
     tick: function (time, timeDelta) {

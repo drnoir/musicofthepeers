@@ -12,13 +12,14 @@ let gameRunning = false;
 
 // random generators 
 function genMapSize() {
-    mapSize = getRandomNumber(0, 2) >= 1 ? 625 : 2500;
+    mapSize = getRandomNumber(0, 2) >= 1 ? 2500 : 3500;
 }
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function getRandomNumber1() {
-    return 0.5 + Math.random() * 0.5;
+    return 0.5+ Math.random() 
+    // return getRandomNumber(0, 100) 
 }
 
 // init random spread
@@ -27,7 +28,8 @@ console.log(randomSpread);
 
 // Function to generate a random 0 or 1
 function getRandomBit() {
-    return Math.random() < randomSpread ? 0 : 1;
+    let rand=  Math.random();
+    return randomSpread >  rand  ? 0: 1;
 }
 
 // paint water 
@@ -64,6 +66,9 @@ function generateRandomArray() {
         // water
         if (i >= waterIndexStr && i <= waterIndexEnd) {
             mapSource.push(paintWater());
+        }
+        else if (i === mapSize/2) {
+            mapSource.push(2);
         }
         else if (i ===  boom1 || i ===  boom2 || i ===  boom3 || i ===  boom4 || i ===  boom5) {
             mapSource.push(9);
@@ -179,8 +184,8 @@ function genRandomTexure() {
 // random floorAllocator
 function genRandomFloorTexture() {
     // allocate a random floor texure
-    let randTextureFloor = getRandomNumber(0, 3);
-    const floorTextures = ['floor', 'floor2', 'floor3', 'floor4']
+    let randTextureFloor = getRandomNumber(0,1);
+    const floorTextures = ['floor', 'floor2']
     return floorTextures[randTextureFloor]
 }
 
@@ -188,13 +193,12 @@ function genRandomFloorTexture() {
 // Create rooms loop - called at init
 function createRooms() {
     const mapData = mapSource;
-    mapSize === 2500 ? mapSource.height = 50 : mapSource.height = 25;
-    mapSize === 2500 ? mapSource.width = 50 : mapSource.width = 25;
+    mapSize === 2500 ? mapSource.height = 50 : mapSource.height = 100;
+    mapSize === 2500 ? mapSource.width = 50 : mapSource.width = 100;
     // console.log(mapData);
     let exitTexture = 'exit'; let waterTexture = 'water';
     // genearte random Textures for mapping arr creation loop
     // wallTexture = genRandomTexure(); 
-    floorTexture = genRandomFloorTexture();
     const WALL_SIZE = 1; const WALL_HEIGHT = 2.25; const WATER_HEIGHT = 3.5;
     let el = document.getElementById('room');
     if (el === null) {
@@ -210,7 +214,7 @@ function createRooms() {
         for (let y = 0; y < mapSource.width; y++) {
             const i = (y * mapSource.width) + x;
             const floorPos = `${((x - (mapSource.width / 2)) * WALL_SIZE)} 0 ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
-            const position = `${((x - (mapSource.width / 2)) * WALL_SIZE)} 0 ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
+            const position = `${((x - (mapSource.width / 2)) * WALL_SIZE)} ${(WALL_HEIGHT / 2)  * WALL_SIZE} ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
             if (mapData[i] === 9) {
                 let newBoom = addBoom();
                 newBoom.setAttribute('position', {x: position.x, y: 0.1, z: position.z});
@@ -226,6 +230,7 @@ function createRooms() {
             }
             // floor
             if (mapData[i] === 0) {
+                floorTexture = genRandomFloorTexture();
                 wall = document.createElement('a-box');
                 wall.setAttribute('width', WALL_SIZE);
                 wall.setAttribute('height', WALL_HEIGHT);
@@ -238,22 +243,23 @@ function createRooms() {
                 wall.setAttribute('static-body', '');
                 wall.setAttribute('position', floorPos);
                 wall.setAttribute('playermovement', '');
-                wall.setAttribute('material', 'src:#' + 'floor');
+                wall.setAttribute('material', 'src:#' + floorTexture);
                 el.appendChild(wall);
             }
             // full height wall
             if (mapData[i] === 1) {
                 wallTexture = genRandomTexure(); 
                 wall = document.createElement('a-box');
-                wall.setAttribute('width', WALL_SIZE);
-
-                wall.setAttribute('depth', WALL_SIZE);
+                let randomWidth = getRandomNumber(1,2);
+                wall.setAttribute('width', randomWidth );
+                let randomDepth = getRandomNumber(1,2);
+                wall.setAttribute('depth', randomDepth );
                 wall.setAttribute('position', position);
                 wall.setAttribute('material', 'src:#' + wallTexture);
 
                 wall.setAttribute('id', 'wall' + i);
                 wall.setAttribute('class', 'wall');
-                let randomHeight = getRandomNumber(2,10);
+                let randomHeight = getRandomNumber(1,9);
                 wall.setAttribute('height', randomHeight);
                 wall.setAttribute('static-body', '');
                 wall.setAttribute('position', position);
@@ -262,6 +268,25 @@ function createRooms() {
                 // wall.setAttribute('explosion-on-click', '');
                 el.appendChild(wall);
             }
+                  // full height wall
+                  if (mapData[i] === 2) {
+                    floorTexture = genRandomFloorTexture();
+                    wall = document.createElement('a-box');
+                    wall.setAttribute('width', WALL_SIZE);
+                    wall.setAttribute('height', WALL_HEIGHT);
+                    wall.setAttribute('depth', WALL_SIZE);
+                    wall.setAttribute('position', position);
+                    wall.setAttribute('material', 'src:#' + wallTexture);
+    
+                    wall.setAttribute('class', 'floor');
+                    wall.setAttribute('height', WALL_HEIGHT / 20);
+                    wall.setAttribute('static-body', '');
+                    wall.setAttribute('position', floorPos);
+                    wall.setAttribute('playermovement', '');
+                    wall.setAttribute('material', 'src:#' + floorTexture);
+                    el.appendChild(wall);
+                    updatePlayerPos(position);
+                }
             //  water
             if (mapData[i] === 6) {
                 const water = document.createElement('a-plane');
