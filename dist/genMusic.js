@@ -69,7 +69,7 @@ function newSequence(){
 
 
 // trigger sequence
-newSequence()
+newSequence();
 
 
 // Start the transport
@@ -106,7 +106,6 @@ const synth2 = new Tone.MembraneSynth().toMaster();
 newSequence2();
 // Start the transport which is the main timeline
 Transport.start();
-
 }
 
 // Start generating random music when you call this function.

@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Music of the Peers</title>
+    <script src="https://cdn.jsdelivr.net/gh/MozillaReality/ammo.js@8bbc0ea/builds/ammo.wasm.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/1.4.2/aframe.min.js"
         integrity="sha512-rVwZ9RF3FKH6TH80cvAnWssdlHPvHfOFDXW0empc5E9gkzD1B7CiySJb4SCC8SgBILhTg7AFM8m3TR1wesZ6FQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script> -->
+    <script src = 'dist/aframe-physics-system.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
     <script src="dist/aframe-play-sound-on-event.min.js"></script>
     <script src="dist/aframe-particle-system-component.min.js"></script>
@@ -16,7 +18,7 @@
     <script src="./dist/components.js" type="module"></script>
 </head>
 <body>
-    <a-scene>
+    <a-scene physics="driver: ammo; debug: true; debugDrawMode: 1; gravity:0;" >
         <a-assets>
             <!-- models -->
             <a-asset-item id="dwarf" src='./models/dwarf.glb'></a-asset-item>
@@ -40,11 +42,11 @@
             <!-- floors -->
             <img id="floor" src="./textures/floor/1.jpg">
             <img id="floor2" src="./textures/floor/2.jpg">
-            <img id="floor3" src="./textures/floor/3.jpg">
-            <img id="floor4" src="./textures/floor/4.jpg">
+            <!-- <img id="floor3" src="./textures/floor/3.jpg">
+            <img id="floor4" src="./textures/floor/4.jpg"> -->
             <!-- water and enviroment -->
             <img id="water" src="./textures/nature/water.jpeg">
-            <img id="exit" src="./textures/walls/copperknob.jpg">
+            <!-- <img id="exit" src="./textures/walls/copperknob.jpg"> -->
             <img id="sky" src="./textures/sky.jpg">
             <img id="portal" src="./textures/portal.jpg">
         </a-assets>
@@ -65,8 +67,10 @@
          </a-entity>
     
             <a-entity light="type: ambient; color: #CCC;intensity: 1;"></a-entity>
-            <a-entity id="playercam" position="1 0.01 2">
-                <a-entity id="camera" camera look-controls fov="25" far="1" near="'0.1">
+            <!-- <a-entity id="playercam" position="1 0.01 2"   movement-controls="fly: true; speed: 5" kinematic-body > -->
+            <a-entity id="rig"  position = '0 2 0'>
+                <a-entity id="camera" camera look-controls wasd-controls="acceleration:25"  ammo-body="type:kinematic; emitCollisionEvents: true;" ammo-shape="type: box; fit: manual; " fov="25" far="1" near="'0.1" player>
+                   
                     <!-- <a-text id="timer" value="Portals Found" position='-3 -0.15 -2'></a-text>
                 <a-text id="timerTime" value="0" position='-2 -0.15 -2'></a-text> -->
                     <a-light id = "torch" type = "spot" angle="10" color="red" decay="0.15" position="0 0 -0.5"
@@ -84,6 +88,7 @@
             </a-entity>
             <!-- Rooms-->
             <a-entity id="room"></a-entity>
+            <a-plane src="#floor" height="4000" width="4000" position = "0 -0.5 0" rotation="-90 -100 0"></a-plane>
             <a-sky src="#sky"></a-sky>
             <!-- Sky -->
     </a-scene>

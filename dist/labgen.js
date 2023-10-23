@@ -1,8 +1,8 @@
 import { generateRandomAmbientPiece, startRandomMusic, stopRandomMusic } from "./genMusic.js";
-// Barrowlands3D source code - codesbase is based on labyinths3D by Chris Godber / DrNoir 2023
+// Music of the Peers source code - codesbase is based on labyinths3D by Chris Godber / DrNoir 2023
 
 // ---------Reassignable global game stare vars-----
-// dwarves
+// boomboxes
 let boom1; let boom2; let boom3; let boom4; let boom5;
 // STORE TEXTURE INFO
 let wallTexture = '0'; let floorTexture = 'floor';
@@ -12,13 +12,15 @@ let gameRunning = false;
 
 // random generators 
 function genMapSize() {
-    mapSize = getRandomNumber(0, 2) >= 1 ? 2500 : 3500;
+    mapSize = getRandomNumber(0, 2) >= 1 ? 5000 : 7500;
 }
+
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
 function getRandomNumber1() {
-    return 0.5+ Math.random() 
+    return 0.5+ Math.random() + 0.5
     // return getRandomNumber(0, 100) 
 }
 
@@ -28,8 +30,11 @@ console.log(randomSpread);
 
 // Function to generate a random 0 or 1
 function getRandomBit() {
-    let rand=  Math.random();
-    return randomSpread >  rand  ? 0: 1;
+    const probabilityOfOne = 0.08;
+
+    // Generate a random number between 0 and 1
+    const randomValue = Math.random();
+    return randomValue < probabilityOfOne ? 1: 0;
 }
 
 // paint water 
@@ -193,8 +198,9 @@ function genRandomFloorTexture() {
 // Create rooms loop - called at init
 function createRooms() {
     const mapData = mapSource;
-    mapSize === 2500 ? mapSource.height = 50 : mapSource.height = 100;
-    mapSize === 2500 ? mapSource.width = 50 : mapSource.width = 100;
+    mapSize === 5000 ? mapSource.height = 100 : mapSource.height = 250;
+    mapSize === 5000 ? mapSource.width = 100 : mapSource.width = 250;
+    mapSize === 5000 ? mapSource.depth = 100: mapSource.depth = 250;
     // console.log(mapData);
     let exitTexture = 'exit'; let waterTexture = 'water';
     // genearte random Textures for mapping arr creation loop
@@ -214,7 +220,8 @@ function createRooms() {
         for (let y = 0; y < mapSource.width; y++) {
             const i = (y * mapSource.width) + x;
             const floorPos = `${((x - (mapSource.width / 2)) * WALL_SIZE)} 0 ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
-            const position = `${((x - (mapSource.width / 2)) * WALL_SIZE)} ${(WALL_HEIGHT / 2)  * WALL_SIZE} ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
+            const position = `${((x - (mapSource.width / 2)) * WALL_SIZE)} 0 ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
+            const playerPos = `${((x - (mapSource.width / 2)) * WALL_SIZE)} 8  ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
             if (mapData[i] === 9) {
                 let newBoom = addBoom();
                 newBoom.setAttribute('position', {x: position.x, y: 0.1, z: position.z});
@@ -222,7 +229,8 @@ function createRooms() {
                 floor.setAttribute('height', WALL_HEIGHT / 20);
                 floor.setAttribute('width', WALL_SIZE);
                 floor.setAttribute('depth', WALL_SIZE);
-                floor.setAttribute('static-body', '');
+                floor.setAttribute('ammo-body','type: static');
+                floor.setAttribute('ammo-shape','type: box');
                 floor.setAttribute('position', floorPos);
                 floor.setAttribute('material', 'src:#' + 'floor');
                 el.appendChild(floor);
@@ -240,7 +248,8 @@ function createRooms() {
 
                 wall.setAttribute('class', 'floor');
                 wall.setAttribute('height', WALL_HEIGHT / 20);
-                wall.setAttribute('static-body', '');
+                wall.setAttribute('ammo-body','type: static;   emitCollisionEvents: true');
+                wall.setAttribute('ammo-shape','type: box');
                 wall.setAttribute('position', floorPos);
                 wall.setAttribute('playermovement', '');
                 wall.setAttribute('material', 'src:#' + floorTexture);
@@ -254,17 +263,16 @@ function createRooms() {
                 wall.setAttribute('width', randomWidth );
                 let randomDepth = getRandomNumber(1,2);
                 wall.setAttribute('depth', randomDepth );
-                wall.setAttribute('position', position);
-                wall.setAttribute('material', 'src:#' + wallTexture);
 
                 wall.setAttribute('id', 'wall' + i);
                 wall.setAttribute('class', 'wall');
-                let randomHeight = getRandomNumber(1,9);
+                let randomHeight = getRandomNumber(3,18);
                 wall.setAttribute('height', randomHeight);
-                wall.setAttribute('static-body', '');
+                wall.setAttribute('ammo-body','type: static;   emitCollisionEvents: true');
+                wall.setAttribute('ammo-shape','type: box');
                 wall.setAttribute('position', position);
                 wall.setAttribute('material', 'src:#' + wallTexture);
-                wall.setAttribute('material', 'repeat:1 4');
+                wall.setAttribute('material', 'repeat: 3 6');
                 // wall.setAttribute('explosion-on-click', '');
                 el.appendChild(wall);
             }
@@ -280,12 +288,14 @@ function createRooms() {
     
                     wall.setAttribute('class', 'floor');
                     wall.setAttribute('height', WALL_HEIGHT / 20);
-                    wall.setAttribute('static-body', '');
+                    wall.setAttribute('ammo-shape','type: box');
+                    wall.setAttribute('ammo-body','type: static;   emitCollisionEvents: true');
+        
                     wall.setAttribute('position', floorPos);
                     wall.setAttribute('playermovement', '');
                     wall.setAttribute('material', 'src:#' + floorTexture);
                     el.appendChild(wall);
-                    updatePlayerPos(position);
+                    updatePlayerPos(playerPos);
                 }
             //  water
             if (mapData[i] === 6) {
@@ -293,7 +303,9 @@ function createRooms() {
                 water.setAttribute('height',  WATER_HEIGHT / 20);
                 water.setAttribute('width', WALL_SIZE);
                 water.setAttribute('depth', WALL_SIZE);
-                water.setAttribute('static-body', '');
+                water.setAttribute('ammo-shape','type: box');
+                water.setAttribute('ammo-body','type: static;   emitCollisionEvents: true');
+  
                 water.setAttribute('position', floorPos);
                 water.setAttribute('rotation', '90 0 0');
                 water.setAttribute('scale', '1 5.72 2');
@@ -308,8 +320,14 @@ function createRooms() {
 // RANDOM AND UTILS ?
 // Update Player pos
 function updatePlayerPos(newPlayPos) {
-    document.querySelector('#playercam').setAttribute('position', newPlayPos);
+    document.querySelector('#rig').setAttribute('position', newPlayPos);
 }
+
+var playerEl = document.querySelector("[camera]");
+playerEl.addEventListener("collide", function(e) {
+  console.log("Player has collided with body #" + e.detail.targetEl.id);
+  e.detail.targetEl; // Other entity, which playerEl touched.
+});
 
 function clearScene() {
     const el = document.getElementById('room');
