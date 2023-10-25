@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Music of the Peers</title>
@@ -8,7 +9,7 @@
         integrity="sha512-rVwZ9RF3FKH6TH80cvAnWssdlHPvHfOFDXW0empc5E9gkzD1B7CiySJb4SCC8SgBILhTg7AFM8m3TR1wesZ6FQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script> -->
-    <script src = 'dist/aframe-physics-system.min.js'></script>
+    <script src='dist/aframe-physics-system.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
     <script src="dist/aframe-play-sound-on-event.min.js"></script>
     <script src="dist/aframe-particle-system-component.min.js"></script>
@@ -17,8 +18,9 @@
     <script src="./dist/scoring.js" type="module"></script>
     <script src="./dist/components.js" type="module"></script>
 </head>
+
 <body>
-    <a-scene physics="driver: ammo; debug: false; debugDrawMode: 1; gravity:0;" >
+    <a-scene physics="driver: ammo; debug: false; debugDrawMode: 1; gravity:0;">
         <a-assets>
             <!-- models -->
             <a-asset-item id="dwarf" src='./models/dwarf.glb'></a-asset-item>
@@ -53,44 +55,40 @@
         <!-- rain -->
         <a-entity position="0 2.25 -15" particle-system="preset: snow"></a-entity>
         <!-- // sound fx -->
-    
-           <!-- Create a "Start Game" link -->
-           <a-entity
-           geometry="primitive: box; width: 0.4; height: 0.4; depth: 0.1;"
-           material="color: #0077CC"
-           position="-1 2 -3"
-           rotation="0 45 0"
-           start-game-btn
-           cursor-listener
-         >
-           <a-text value="Generate City" align="center" color="#FFFFFF" scale="2 2 2" ></a-text>
-         </a-entity>
-    
-            <a-entity light="type: ambient; color: #CCC;intensity: 1;"></a-entity>
-            <!-- <a-entity id="playercam" position="1 0.01 2"   movement-controls="fly: true; speed: 5" kinematic-body > -->
-            <a-entity id="rig"  position = '0 2 0'>
-                <a-entity id="camera" camera look-controls wasd-controls="acceleration:25"  ammo-body="type:kinematic; emitCollisionEvents: true;" ammo-shape="type: box; fit: manual; " fov="25" far="1" near="'0.1" player>
-                   
-                    <!-- <a-text id="timer" value="Portals Found" position='-3 -0.15 -2'></a-text>
+
+        <!-- Create a "Start Game" link -->
+        <a-entity geometry="primitive: box; width: 0.4; height: 0.4; depth: 0.1;" material="color: #0077CC"
+            position="-1 2 -3" rotation="0 45 0" start-game-btn cursor-listener>
+            <a-text value="Generate City" align="center" color="#FFFFFF" scale="2 2 2"></a-text>
+        </a-entity>
+
+        <a-entity light="type: ambient; color: #CCC;intensity: 1;"></a-entity>
+        <!-- <a-entity id="playercam" position="1 0.01 2"   movement-controls="fly: true; speed: 5" kinematic-body > -->
+        <a-entity id="rig" position='0 2 0'>
+            <a-entity id="camera" camera look-controls wasd-controls="acceleration:25"
+                ammo-body="type:kinematic; emitCollisionEvents: true;" ammo-shape="type: box; fit: manual; " fov="25"
+                far="1" near="'0.1" player>
+
+                <!-- <a-text id="timer" value="Portals Found" position='-3 -0.15 -2'></a-text>
                 <a-text id="timerTime" value="0" position='-2 -0.15 -2'></a-text> -->
-                    <a-light id = "torch" type = "spot" angle="10" color="red" decay="0.15" position="0 0 -0.5"
+                <a-light id="torch" type="spot" angle="10" color="red" decay="0.15" position="0 0 -0.5"
                     animation="property: light.color; isRawProperty: false; from:rgb(255,0,0);to:rgb(0,250,154); dur: 2000; loop:true; easings: easeInOutSine; dir: alternate; autoplay: false"
-                    animation__2="property: light.color; isRawProperty: false; from:rgb(0,250,154);to:rgb(255,0,0); dur: 2000; loop:true; easings: easeInOutSine; dir: alternate; autoplay: false"
-                    ></a-light>
-                    <a-entity
-                        animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
-                        animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 100; from: 1 1 1; to: 0.1 0.1 0.1"
-                        animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 100; to: 1 1 1"
-                        cursor="fuse: true;" material="color: #8B0000; shader: flat" position="0 0 -1"
-                        geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" scale="0.1 0.1 0.1">
-                    </a-entity>
+                    animation__2="property: light.color; isRawProperty: false; from:rgb(0,250,154);to:rgb(255,0,0); dur: 2000; loop:true; easings: easeInOutSine; dir: alternate; autoplay: false"></a-light>
+                <a-entity
+                    animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
+                    animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 100; from: 1 1 1; to: 0.1 0.1 0.1"
+                    animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 100; to: 1 1 1"
+                    cursor="fuse: true;" material="color: #8B0000; shader: flat" position="0 0 -1"
+                    geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" scale="0.1 0.1 0.1">
                 </a-entity>
             </a-entity>
-            <!-- Rooms-->
-            <a-entity id="room"></a-entity>
-            <a-plane src="#floor" height="4000" width="4000" position = "0 -0.5 0" rotation="-90 -100 0"></a-plane>
-            <a-sky src="#sky"></a-sky>
-            <!-- Sky -->
+        </a-entity>
+        <!-- Rooms-->
+        <a-entity id="room"></a-entity>
+        <a-plane src="#floor" height="4000" width="4000" position="0 -0.5 0" rotation="-90 -100 0"></a-plane>
+        <a-sky src="#sky"></a-sky>
+        <!-- Sky -->
     </a-scene>
 </body>
+
 </html>
