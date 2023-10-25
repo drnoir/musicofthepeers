@@ -30,7 +30,7 @@ console.log(randomSpread);
 
 // Function to generate a random 0 or 1
 function getRandomBit() {
-    const probabilityOfOne = 0.08;
+    const probabilityOfOne = 0.0682;
 
     // Generate a random number between 0 and 1
     const randomValue = Math.random();
