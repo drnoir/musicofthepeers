@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Music of the Peers</title>
@@ -8,32 +7,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/1.4.2/aframe.min.js"
         integrity="sha512-rVwZ9RF3FKH6TH80cvAnWssdlHPvHfOFDXW0empc5E9gkzD1B7CiySJb4SCC8SgBILhTg7AFM8m3TR1wesZ6FQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script> -->
-    <script src='dist/aframe-physics-system.min.js'></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
-    <script src="dist/aframe-play-sound-on-event.min.js"></script>
     <script src="dist/aframe-particle-system-component.min.js"></script>
     <script src="./dist/tone.js" type="module"></script>
     <script src="./dist/labgen.js" type="module"></script>
-    <script src="./dist/scoring.js" type="module"></script>
     <script src="./dist/components.js" type="module"></script>
 </head>
 
 <body>
-    <a-scene physics="driver: ammo; debug: false; debugDrawMode: 1; gravity:0;">
+    <a-scene>
         <a-assets>
-            <!-- models -->
-            <a-asset-item id="dwarf" src='./models/dwarf.glb'></a-asset-item>
-            <a-asset-item id="explosion" src='./models/explode.glb'></a-asset-item>
-            <!-- soundfx -->
-            <audio id="dwarf1" src="./sound/dwarf1.mp3" preload="auto"></audio>
-            <audio id="dwarf2" src="./sound/dwarf2.mp3" preload="auto"></audio>
-            <audio id="dwarf3" src="./sound/dwarf3.mp3" preload="auto"></audio>
-            <audio id="dooropen" src="./sound/dooropen.mp3" preload="auto"></audio>
-            <audio id="explode" src="./sound/explode.mp3" preload="auto"></audio>
-            <audio id="blast" src="./sound/blast.mp3" preload="auto"></audio>
-            <audio id="walk" src="./sound/walk.mp3" preload="auto"></audio>
-            <audio id="waterSound" src="./sound/water.ogg" preload="auto"></audio>
             <!--TEXTURES-->
             <!-- walls -->
             <img id="1" src="./textures/walls/1.jpg">
@@ -44,33 +27,24 @@
             <!-- floors -->
             <img id="floor" src="./textures/floor/1.jpg">
             <img id="floor2" src="./textures/floor/2.jpg">
-            <!-- <img id="floor3" src="./textures/floor/3.jpg">
-            <img id="floor4" src="./textures/floor/4.jpg"> -->
             <!-- water and enviroment -->
             <img id="water" src="./textures/nature/water.jpeg">
-            <!-- <img id="exit" src="./textures/walls/copperknob.jpg"> -->
             <img id="sky" src="./textures/sky.jpg">
             <img id="portal" src="./textures/portal.jpg">
         </a-assets>
         <!-- rain -->
         <a-entity position="0 2.25 -15" particle-system="preset: snow"></a-entity>
         <!-- // sound fx -->
-
-        <!-- Create a "Start Game" link -->
+        <!-- Create a "Start Game" link CHAT GPT -->
         <a-entity geometry="primitive: box; width: 0.4; height: 0.4; depth: 0.1;" material="color: #0077CC"
             position="-1 2 -3" rotation="0 45 0" start-game-btn cursor-listener>
-            <a-text value="Generate City" align="center" color="#FFFFFF" scale="2 2 2"></a-text>
+            <a-text value="Generate City" color="#FFFFFF" scale="2 2 2"></a-text>
         </a-entity>
-
+        <!-- scene -->
         <a-entity light="type: ambient; color: #CCC;intensity: 1;"></a-entity>
-        <!-- <a-entity id="playercam" position="1 0.01 2"   movement-controls="fly: true; speed: 5" kinematic-body > -->
-        <a-entity id="rig" position='0 2 0'>
-            <a-entity id="camera" camera look-controls wasd-controls="acceleration:25"
-                ammo-body="type:kinematic; emitCollisionEvents: true;" ammo-shape="type: box; fit: manual; " fov="25"
+        <a-entity id="rig" position='0 3 0'>
+            <a-entity id="camera" camera look-controls wasd-controls="acceleration:25" fov="25"
                 far="1" near="'0.1" player>
-
-                <!-- <a-text id="timer" value="Portals Found" position='-3 -0.15 -2'></a-text>
-                <a-text id="timerTime" value="0" position='-2 -0.15 -2'></a-text> -->
                 <a-light id="torch" type="spot" angle="10" color="red" decay="0.15" position="0 0 -0.5"
                     animation="property: light.color; isRawProperty: false; from:rgb(255,0,0);to:rgb(0,250,154); dur: 2000; loop:true; easings: easeInOutSine; dir: alternate; autoplay: false"
                     animation__2="property: light.color; isRawProperty: false; from:rgb(0,250,154);to:rgb(255,0,0); dur: 2000; loop:true; easings: easeInOutSine; dir: alternate; autoplay: false"></a-light>

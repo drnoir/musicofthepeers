@@ -1,7 +1,7 @@
 {
-  "name": "barrowlands",
+  "name": "Music of the peers",
   "version": "1.0.0",
-  "description": "Create random maps in 3D with A-Frame with copperknob music",
+  "description": "Create random music and cityscapes",
   "main": "main.js",
   "scripts": {
     "postinstall": "install-app-deps",
@@ -12,7 +12,7 @@
     "dist": "electron-builder"
   },
   "build": {
-    "appId": "barrowlands",
+    "appId": "Music of the peers",
     "dmg": {
       "contents": [
         {
@@ -40,7 +40,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/drnoir/barrowlands.git"
+    "url": "git+https://github.com/drnoir/musicofthepeers"
   },
   "keywords": [
     "open",
@@ -56,9 +56,9 @@
   "author": "Chris Godber <chrispgodber@gmail.com> (http://www.chrisgodber.co.uk/)",
   "license": "All Rights Reserved",
   "bugs": {
-    "url": "https://github.com/drnoir/barrowlands/issues"
+    "url": "https://github.com/drnoir/musicofthepeers/issues"
   },
-  "homepage": "https://github.com/drnoir/barrowlands#readme",
+  "homepage": "https://github.com/drnoir/musicofthepeers#readme",
   "devDependencies": {
     "electron": "^25.0.0",
     "electron-builder": "^24.6.3",

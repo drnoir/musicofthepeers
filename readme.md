@@ -1,16 +1,6 @@
-## BARROWLANDS
+## mUSIC OF THE PEERS
 
-A virtual reality experience loosely based on Copperknob's album Barrowlands for an art exhibition in
-Macclesfield in November 2023. Electron for doing windows builds
-
-## Game aim
-Find the portals, move around, destroy walls to find your way through procudreally generated mazes / mines
-The aim is to move through as many portals as possible. Every time you move through a maze a new maze is genreated on the fly. 
-
-You have 10 mins and get a miners report at the end with your stats
-
-### Assets
--Dwarf by Mateus Schwaab is licensed under Creative Commons Attribution-NonCommercial
+A Browser based geneartive music experience 
 
 ### stack
 Javascript / Electron / A-Frame / 

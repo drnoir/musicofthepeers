@@ -1,3 +1,5 @@
 /node_modules
+/dist/win-unpacked
+/dist/squirrel-windows
 key.pem 
 cert.pem

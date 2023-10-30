@@ -1,4 +1,4 @@
-import { generateRandomAmbientPiece, startRandomMusic, stopRandomMusic } from "./genMusic.js";
+import { startRandomMusic, stopRandomMusic } from "./genMusic.js";
 // Music of the Peers source code - codesbase is based on labyinths3D by Chris Godber / DrNoir 2023
 
 // ---------Reassignable global game stare vars-----
@@ -20,8 +20,7 @@ function getRandomNumber(min, max) {
 }
 
 function getRandomNumber1() {
-    return 0.5+ Math.random() + 0.5
-    // return getRandomNumber(0, 100) 
+    return 0.5 + Math.random() + 0.5
 }
 
 // init random spread
@@ -34,7 +33,7 @@ function getRandomBit() {
 
     // Generate a random number between 0 and 1
     const randomValue = Math.random();
-    return randomValue < probabilityOfOne ? 1: 0;
+    return randomValue < probabilityOfOne ? 1 : 0;
 }
 
 // paint water 
@@ -51,7 +50,7 @@ function randomArrIndexWater() {
 }
 
 // gen 5 random dwarves indexed
-function randomArrIndexDwarves() {
+function randomArrIndexBoxes() {
     boom1 = getRandomNumber(0, mapSize);
     boom2 = getRandomNumber(5, mapSize);
     boom3 = getRandomNumber(10, mapSize);
@@ -72,10 +71,10 @@ function generateRandomArray() {
         if (i >= waterIndexStr && i <= waterIndexEnd) {
             mapSource.push(paintWater());
         }
-        else if (i === mapSize/2) {
+        else if (i === mapSize / 2) {
             mapSource.push(2);
         }
-        else if (i ===  boom1 || i ===  boom2 || i ===  boom3 || i ===  boom4 || i ===  boom5) {
+        else if (i === boom1 || i === boom2 || i === boom3 || i === boom4 || i === boom5) {
             mapSource.push(9);
             console.log('dwarf added at' + i)
         }
@@ -84,7 +83,6 @@ function generateRandomArray() {
             mapSource.push(getRandomBit());
         }
     }
-    console.log(mapSource);
 }
 
 // Function to download a JSON file
@@ -100,15 +98,10 @@ function downloadJSON(data, filename) {
     URL.revokeObjectURL(url);
 }
 
-
 // Trigger a download of JSON file
 function downloadJSONonClick() {
     downloadJSON(mapSource, 'map.json');
 }
-
-// INIT LOAD - MAIN LOOP FOR LEVEL LOADING
-    // loadNewLevel();
-
 
 // CHARECETERS AND ENEMIES =--<
 //Add chareceter to scene function 
@@ -130,10 +123,10 @@ async function loadNewLevel() {
     // generate random map Array
     await genMapSize();
     await randomArrIndexWater();
-    await randomArrIndexDwarves();
+    await randomArrIndexBoxes();
     await generateRandomArray();
     // player pos
-    await updatePlayerPos('1 1.5 2');
+    await updatePlayerPos('1 4 2');
     // render loop
     await createRooms();
     // start timer
@@ -143,15 +136,15 @@ async function loadNewLevel() {
 }
 
 // used for scoring to 
-function GameStarted(){
+function GameStarted() {
     gameRunning = true;
 }
 
-function gameEnded(){
+function gameEnded() {
     gameRunning = false;
 }
 
-function getGameRunningState(){
+function getGameRunningState() {
     return gameRunning;
 }
 
@@ -189,7 +182,7 @@ function genRandomTexure() {
 // random floorAllocator
 function genRandomFloorTexture() {
     // allocate a random floor texure
-    let randTextureFloor = getRandomNumber(0,1);
+    let randTextureFloor = getRandomNumber(0, 1);
     const floorTextures = ['floor', 'floor2']
     return floorTextures[randTextureFloor]
 }
@@ -200,11 +193,8 @@ function createRooms() {
     const mapData = mapSource;
     mapSize === 5000 ? mapSource.height = 100 : mapSource.height = 250;
     mapSize === 5000 ? mapSource.width = 100 : mapSource.width = 250;
-    mapSize === 5000 ? mapSource.depth = 100: mapSource.depth = 250;
-    // console.log(mapData);
+    mapSize === 5000 ? mapSource.depth = 100 : mapSource.depth = 250;
     let exitTexture = 'exit'; let waterTexture = 'water';
-    // genearte random Textures for mapping arr creation loop
-    // wallTexture = genRandomTexure(); 
     const WALL_SIZE = 1; const WALL_HEIGHT = 2.25; const WATER_HEIGHT = 3.5;
     let el = document.getElementById('room');
     if (el === null) {
@@ -221,16 +211,16 @@ function createRooms() {
             const i = (y * mapSource.width) + x;
             const floorPos = `${((x - (mapSource.width / 2)) * WALL_SIZE)} 0 ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
             const position = `${((x - (mapSource.width / 2)) * WALL_SIZE)} 0 ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
-            const playerPos = `${((x - (mapSource.width / 2)) * WALL_SIZE)} 8  ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
+            const playerPos = `${((x - (mapSource.width / 2)) * WALL_SIZE)} 12  ${(y - (mapSource.height / 2)) * WALL_SIZE}`;
             if (mapData[i] === 9) {
                 let newBoom = addBoom();
-                newBoom.setAttribute('position', {x: position.x, y: 0.1, z: position.z});
+                newBoom.setAttribute('position', { x: position.x, y: 0.1, z: position.z });
                 const floor = document.createElement('a-box');
                 floor.setAttribute('height', WALL_HEIGHT / 20);
                 floor.setAttribute('width', WALL_SIZE);
                 floor.setAttribute('depth', WALL_SIZE);
-                floor.setAttribute('ammo-body','type: static');
-                floor.setAttribute('ammo-shape','type: box');
+                floor.setAttribute('ammo-body', 'type: static');
+                floor.setAttribute('ammo-shape', 'type: box');
                 floor.setAttribute('position', floorPos);
                 floor.setAttribute('material', 'src:#' + 'floor');
                 el.appendChild(floor);
@@ -245,11 +235,10 @@ function createRooms() {
                 wall.setAttribute('depth', WALL_SIZE);
                 wall.setAttribute('position', position);
                 wall.setAttribute('material', 'src:#' + wallTexture);
-
                 wall.setAttribute('class', 'floor');
                 wall.setAttribute('height', WALL_HEIGHT / 20);
-                wall.setAttribute('ammo-body','type: static;   emitCollisionEvents: true');
-                wall.setAttribute('ammo-shape','type: box');
+                wall.setAttribute('ammo-body', 'type: static;   emitCollisionEvents: true');
+                wall.setAttribute('ammo-shape', 'type: box');
                 wall.setAttribute('position', floorPos);
                 wall.setAttribute('playermovement', '');
                 wall.setAttribute('material', 'src:#' + floorTexture);
@@ -257,55 +246,51 @@ function createRooms() {
             }
             // full height wall
             if (mapData[i] === 1) {
-                wallTexture = genRandomTexure(); 
+                wallTexture = genRandomTexure();
                 wall = document.createElement('a-box');
-                let randomWidth = getRandomNumber(1,2);
-                wall.setAttribute('width', randomWidth );
-                let randomDepth = getRandomNumber(1,2);
-                wall.setAttribute('depth', randomDepth );
-
+                let randomWidth = getRandomNumber(1, 2);
+                wall.setAttribute('width', randomWidth);
+                let randomDepth = getRandomNumber(1, 2);
+                wall.setAttribute('depth', randomDepth);
                 wall.setAttribute('id', 'wall' + i);
                 wall.setAttribute('class', 'wall');
-                let randomHeight = getRandomNumber(3,18);
+                let randomHeight = getRandomNumber(3, 18);
                 wall.setAttribute('height', randomHeight);
-                wall.setAttribute('ammo-body','type: static;   emitCollisionEvents: true');
-                wall.setAttribute('ammo-shape','type: box');
+                wall.setAttribute('ammo-body', 'type: static;   emitCollisionEvents: true');
+                wall.setAttribute('ammo-shape', 'type: box');
                 wall.setAttribute('position', position);
                 wall.setAttribute('material', 'src:#' + wallTexture);
-                wall.setAttribute('material', 'repeat: 3 6');
+                wall.setAttribute('material', 'repeat: 1 2');
                 // wall.setAttribute('explosion-on-click', '');
                 el.appendChild(wall);
             }
-                  // full height wall
-                  if (mapData[i] === 2) {
-                    floorTexture = genRandomFloorTexture();
-                    wall = document.createElement('a-box');
-                    wall.setAttribute('width', WALL_SIZE);
-                    wall.setAttribute('height', WALL_HEIGHT);
-                    wall.setAttribute('depth', WALL_SIZE);
-                    wall.setAttribute('position', position);
-                    wall.setAttribute('material', 'src:#' + wallTexture);
-    
-                    wall.setAttribute('class', 'floor');
-                    wall.setAttribute('height', WALL_HEIGHT / 20);
-                    wall.setAttribute('ammo-shape','type: box');
-                    wall.setAttribute('ammo-body','type: static;   emitCollisionEvents: true');
-        
-                    wall.setAttribute('position', floorPos);
-                    wall.setAttribute('playermovement', '');
-                    wall.setAttribute('material', 'src:#' + floorTexture);
-                    el.appendChild(wall);
-                    updatePlayerPos(playerPos);
-                }
+            // full height wall
+            if (mapData[i] === 2) {
+                floorTexture = genRandomFloorTexture();
+                wall = document.createElement('a-box');
+                wall.setAttribute('width', WALL_SIZE);
+                wall.setAttribute('height', WALL_HEIGHT);
+                wall.setAttribute('depth', WALL_SIZE);
+                wall.setAttribute('position', position);
+                wall.setAttribute('material', 'src:#' + wallTexture);
+                wall.setAttribute('class', 'floor');
+                wall.setAttribute('height', WALL_HEIGHT / 20);
+                wall.setAttribute('ammo-shape', 'type: box');
+                wall.setAttribute('ammo-body', 'type: static;   emitCollisionEvents: true');
+                wall.setAttribute('position', floorPos);
+                wall.setAttribute('playermovement', '');
+                wall.setAttribute('material', 'src:#' + floorTexture);
+                el.appendChild(wall);
+                updatePlayerPos(playerPos);
+            }
             //  water
             if (mapData[i] === 6) {
                 const water = document.createElement('a-plane');
-                water.setAttribute('height',  WATER_HEIGHT / 20);
+                water.setAttribute('height', WATER_HEIGHT / 20);
                 water.setAttribute('width', WALL_SIZE);
                 water.setAttribute('depth', WALL_SIZE);
-                water.setAttribute('ammo-shape','type: box');
-                water.setAttribute('ammo-body','type: static;   emitCollisionEvents: true');
-  
+                water.setAttribute('ammo-shape', 'type: box');
+                water.setAttribute('ammo-body', 'type: static;   emitCollisionEvents: true');
                 water.setAttribute('position', floorPos);
                 water.setAttribute('rotation', '90 0 0');
                 water.setAttribute('scale', '1 5.72 2');
@@ -324,9 +309,9 @@ function updatePlayerPos(newPlayPos) {
 }
 
 var playerEl = document.querySelector("[camera]");
-playerEl.addEventListener("collide", function(e) {
-  console.log("Player has collided with body #" + e.detail.targetEl.id);
-  e.detail.targetEl; // Other entity, which playerEl touched.
+playerEl.addEventListener("collide", function (e) {
+    console.log("Player has collided with body #" + e.detail.targetEl.id);
+    e.detail.targetEl; // Other entity, which playerEl touched.
 });
 
 function clearScene() {
@@ -336,4 +321,4 @@ function clearScene() {
 }
 
 // EXPORT FUNCTIONS
-export { loadNewLevel, getRandomNumber ,GameStarted , gameEnded, getGameRunningState}
+export { loadNewLevel, getRandomNumber, GameStarted, gameEnded, getGameRunningState }
