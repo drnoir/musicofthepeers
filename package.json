@@ -1,5 +1,5 @@
 {
-  "name": "Music of the peers",
+  "name": "Musicofthepeers",
   "version": "1.0.0",
   "description": "Create random music and cityscapes",
   "main": "main.js",
@@ -12,7 +12,7 @@
     "dist": "electron-builder"
   },
   "build": {
-    "appId": "Music of the peers",
+    "appId": "Musicofthepeers",
     "dmg": {
       "contents": [
         {

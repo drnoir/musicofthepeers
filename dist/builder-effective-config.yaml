@@ -1,7 +1,7 @@
 directories:
   output: dist
   buildResources: build
-appId: barrowlands
+appId: Musicofthepeers
 dmg:
   contents:
     - x: 110
